@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button'
-import { setInteractionMode } from 'vee-validate'
+import FeedbackContext from './context/FeedbackContext'
 import RatingSelect from './RatingSelect'
 
 function FeedbackForm({ handleAdd }) {
@@ -10,6 +10,8 @@ function FeedbackForm({ handleAdd }) {
   const [rating, setRating] = useState(10)
   const [btnDisabled, setBtnDisabled] = useState(true)
   const [message, setMessage] = useState('')
+
+  const {addFeedback} = useContext(FeedbackContext)
 
   const handleTextChange = (event) => {
     //useState conditionals
@@ -39,7 +41,7 @@ function FeedbackForm({ handleAdd }) {
         rating
       }
 
-      handleAdd(newFeedback)
+      addFeedback(newFeedback)
 
       setText('')
     }

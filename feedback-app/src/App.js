@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom"
+import Card from "./components/shared/Card"
 import Header from "./components/Header"
 // import FeedBackItem from "./components/FeedBackItem";
 import FeedbackData from "./data/FeedbackData"
@@ -9,24 +10,17 @@ import FeedbackStats from "./components/FeedbackStats"
 import FeedbackForm from "./components/FeedbackForm"
 // import Card from "./components/shared/Card";
 import AboutPage from "./pages/AboutPage"
+import AboutIcon from "./components/AboutIcon"
+import Post from "./components/Post"
+import {FeedbackProvider} from './components/context/FeedbackContext'
 
 function App() {
   const [feedback, setFeedback] = useState(FeedbackData)
-  const addFeedback = (newFeedback) => {
-    //add new id to a NEW feedback automatically
-    newFeedback.id = uuidv4()
-    //setFeedback and spread feedback info already in feedback , with the newest feedback
-    setFeedback([newFeedback, ...feedback])
-  }
 
-  const deleteFeedback = (id) => {
-    if (window.confirm("you sure u wanna delete?")) {
-      setFeedback(feedback.filter((item) => item.id !== id))
-    }
-  }
+ 
 
   return (
-    <React.Fragment>
+    <FeedbackProvider>
       <Router>
         <Header />
         <div className="container">
@@ -36,21 +30,29 @@ function App() {
               path="/"
               element={
                 <>
-                  <FeedbackForm handleAdd={addFeedback} />
-                  <FeedbackStats feedback={feedback} />
-                  <FeedbackList
-                    feedback={feedback}
-                    handleDelete={deleteFeedback}
-                  />
+                  <FeedbackForm />
+                  <FeedbackStats />
+                  <FeedbackList />
                 </>
               }
             ></Route>
 
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/post/*" element={<Post />} />
           </Routes>
+
+          <Card>
+            <NavLink to="/" activeClassName="active">
+              Home
+            </NavLink>
+            <NavLink to="/about" activeClassName="active">
+              about
+            </NavLink>
+          </Card>
+          <AboutIcon />
         </div>
       </Router>
-    </React.Fragment>
+    </FeedbackProvider>
   )
 }
 

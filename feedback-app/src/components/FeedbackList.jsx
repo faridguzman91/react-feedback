@@ -1,11 +1,15 @@
 /* eslint-disable array-callback-return */
 import { motion, AnimatePresence } from "framer-motion"
+import {useContext} from 'react'
+import FeedbackContext from "./context/FeedbackContext"
 import React from "react"
 import PropTypes from "prop-types"
 import FeedBackItem from "./FeedBackItem"
 
-function FeedbackList({ feedback, handleDelete }) {
+function FeedbackList({}) {
   // console.log(feedback)
+
+  const {feedback} = useContext(FeedbackContext)
 
   if (!feedback || feedback.length === 0) {
     return <p>no feedback yet</p>
@@ -25,7 +29,7 @@ function FeedbackList({ feedback, handleDelete }) {
             <FeedBackItem
               key={item.id}
               item={item}
-              handleDelete={handleDelete}
+              // handleDelete={handleDelete}
             />
           </motion.div>
         ))}
@@ -47,14 +51,14 @@ function FeedbackList({ feedback, handleDelete }) {
   // )
 }
 
-FeedbackList.propTypes = {
-  feedback: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-    })
-  ),
-}
+// FeedbackList.propTypes = {
+//   feedback: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       text: PropTypes.string.isRequired,
+//       rating: PropTypes.number.isRequired,
+//     })
+//   ),
+// }
 
 export default FeedbackList
