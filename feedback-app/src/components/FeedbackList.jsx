@@ -5,18 +5,23 @@ import FeedbackContext from "./context/FeedbackContext"
 import React from "react"
 import PropTypes from "prop-types"
 import FeedBackItem from "./FeedBackItem"
+import Spinner from "./shared/Spinner"
+
 
 function FeedbackList({}) {
   // console.log(feedback)
 
-  const {feedback} = useContext(FeedbackContext)
+  const {feedback, isLoading} = useContext(FeedbackContext)
 
-  if (!feedback || feedback.length === 0) {
+  if (!isLoading && (!feedback || feedback.length === 0)) {
     return <p>no feedback yet</p>
   }
 
-  return (
-    <div className="feedback-list">
+  //check if loading is true then render feedback list
+  // add spinner when loading
+
+  return isLoading ? (<Spinner />) : (
+     <div className="feedback-list">
       <AnimatePresence>
         {feedback.map((item) => (
           // <div>{item.rating}</div>
@@ -36,6 +41,10 @@ function FeedbackList({}) {
       </AnimatePresence>
     </div>
   )
+
+  // return (
+   
+  // )
 
   // return (
   //   <div className="feedback-list">
