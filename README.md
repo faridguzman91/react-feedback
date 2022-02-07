@@ -1,7 +1,7 @@
 # react-feedback
 
 <br>
- feedback app using concurrently, json, framer motion, uuid, react-router dom
+ feedback app using concurrently, json database, framer motion, uuid, react-router dom
  <br>
  <br>
  
